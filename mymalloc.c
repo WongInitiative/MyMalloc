@@ -4,12 +4,22 @@
 #include <stdio.h>
 #include <unistd.h>
 
+typedef struct meta{
+	//14 bit var;
+	struct* next;
+} meta;
+
+char mem[4096];
+
+
 void* mymalloc(int requested, int __LINE__, char* __FILE__){
 
 }
 
 
 void myfree(void* usrptr, int __LINE__, char* __FILE__){
+
+
 
 }
 
