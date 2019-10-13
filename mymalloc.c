@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 typedef struct meta{
-	//14 bit var;
+	unsigned int size : 14;
 	struct* next;
 } meta;
 
@@ -18,7 +18,6 @@ void* mymalloc(int requested, int __LINE__, char* __FILE__){
 
 
 void myfree(void* usrptr, int __LINE__, char* __FILE__){
-
 
 
 }
