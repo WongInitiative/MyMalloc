@@ -1,22 +1,20 @@
-#include <stdio.h>
-#include <stdin.h>
+#include "mymalloc.h"
 
-int test();
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
 
 
 int main(int argc, char* argv[]){
 
-test();
-		
-return 0;
+	int * ptr = (int*) malloc(1);
+	ptr = free();
 
-}
-
-
-
-
-int test(){
-
-	printf("our test works!");
 	return 0;
 }
+
+
+
+
