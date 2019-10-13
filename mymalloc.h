@@ -1,3 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdbool.h>
+
 #ifndef _MYMALLOC_H
 #define _MYMALLOC_H
         #define malloc(x) mymalloc((x), __LINE__, __FILE__)
