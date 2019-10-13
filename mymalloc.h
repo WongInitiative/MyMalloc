@@ -3,7 +3,7 @@
         #define malloc(x) mymalloc((x), __LINE__, __FILE__)
 	#define free(x) myfree((x), __LINE__, __FILE__)
 
-	typedef struct meta{
+        typedef struct meta{
                 unsigned int size : 14;
                 struct meta* next;
         }meta;
