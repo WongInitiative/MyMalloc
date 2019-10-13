@@ -2,9 +2,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdbool.h>
 
 
-void* mymalloc(int requested, int __LINE__, char* __FILE__){
+void* mymalloc(int requested, int line, char* file){
 
 	printf("Working myMalloc");
 
@@ -12,7 +15,7 @@ void* mymalloc(int requested, int __LINE__, char* __FILE__){
 }
 
 
-void myfree(void* usrptr, int __LINE__, char* __FILE__){
+void myfree(void* usrptr, int line, char* file){
 
 	printf("Working myFree");
 
