@@ -10,7 +10,7 @@
 int main(int argc, char* argv[]){
 
 	int * ptr = (int*) malloc(1);
-	ptr = free();
+	free(ptr);
 
 	return 0;
 }
