@@ -9,6 +9,13 @@
 //#define malloc(x) mymalloc(requested, __LINE__, __FILE__)
 //#define free(x) myfree(usrptr, __LINE__, __FILE__)
 
+void workLoad1();
+void workLoad2();
+void workLoad3();
+void workLoad4();
+void workLoadUnique1();
+void workLoadUnique2();
+
 
 
 int main(int argc, char* argv[]){
@@ -16,22 +23,7 @@ int main(int argc, char* argv[]){
 
 	///Workloads
 	workLoad1();
-
-	///Workload 2: malloc 150 bytes --> after each 50 byte  free all of them 
-	i = 0; 
-	while (i < 150){
-		malloc(1);
-		if (i == 50 || i == 100 || i == 150){
-			free(//Some region)
-		} 	
-		i++;
-	}
-
-	
-
-		
-	int * ptr = (int*) malloc(1);
-	free(ptr);
+	workLoad2();
 
 
 
@@ -79,26 +71,39 @@ void workLoad2(){
 		}
 		b = 0;
 		while (b < 50){
-			
-		
+			free(ptr[b]);	
+			b++;
 		}
 	}	
-	
-	a = 0;
-	while (a < 
-	
+
+
+	end = clock();
+	double total_time = (double) (end - start) / CLOCKS_PER_SEC;
+	double avg_time = total_time / 3; //Time it takes to malloc and free an array of 50
+	printf("Time it took to malloc and free an array of 50 ptrs is: %lf", avg_time);
+
+	return;
 
 }
 
-
+///Randomly choose between 1 byte malloc or freeing 1 byte free
 void workLoad3(){
 
-
+	
 }
 
 
 
+void workLoad4(){
+
+}
+
+void workLoadUnique1(){
 
 
+}
+
+void workLoadUnique2(){
 
 
+}
