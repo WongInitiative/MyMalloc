@@ -12,7 +12,7 @@
         typedef struct meta{
                 unsigned int isfreeNsize : 14;
                 struct meta* next;
-        }meta;
+        }__attribute__((packed, aligned(1))) meta;
 
         char mem[4096];
 
