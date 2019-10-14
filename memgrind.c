@@ -49,6 +49,7 @@ void workLoad1(){
 	while (a <150){
 		char * ptr = (char*) malloc(sizeof(char));
 		free (ptr);
+		a++;
 	}	
 
 	end = clock(); //end clock	
@@ -66,8 +67,26 @@ void workLoad2(){
 
 	clock_t start, end;
 
+	char* ptr[50];
 	
-
+	int a, b = 0;
+	
+	start = clock (); 
+	while (a <150) {
+		while (b < 50){
+			a++;
+			ptr[b] = (char*) malloc(1);
+		}
+		b = 0;
+		while (b < 50){
+			
+		
+		}
+	}	
+	
+	a = 0;
+	while (a < 
+	
 
 }
 
