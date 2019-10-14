@@ -21,11 +21,29 @@ void workLoadUnique2();
 int main(int argc, char* argv[]){
 
 
+	///General Testing:
+
+	char* ptr = (char *) malloc(1);
+	printf("%x", ptr);
+
+	int* ptrInt = (int *) malloc (4*sizeof(int));
+	ptrInt[0] = 1;
+	ptrInt[1] = 2;
+	ptrInt[2] = 3;
+	ptrInt[3] = 4;
+
+	printf("%d", ptrInt[2]);
+	printf("%d", *(ptrInt + 2));
+
+	double* ptrDouble = (double *) malloc(5*sizeof(double));
+	printf("%x", ptr);
+
+
 	///Workloads
-	workLoad1();
-	workLoad2();
+	//workLoad1();
+	//workLoad2();
 
-
+	
 
 	return 0;
 }
