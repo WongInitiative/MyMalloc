@@ -1,8 +1,9 @@
 #include "mymalloc.h"
 
 void* mymalloc(int requested, int line, char* file){
-	int* ptr = (int*) mem;
-	*ptr = 25;
+	meta* ptr = (void*) mem;
+	int isfree = (((ptr -> isfreeNsize) >> 13) & 1);
+	int size = (ptr -> isfreeNsize) &= ~(1 << 13);
 	printf("%d\n", mem[0]);
 	printf("Working myMalloc");
 
