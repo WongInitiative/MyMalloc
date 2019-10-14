@@ -10,7 +10,7 @@
 	#define free(x) myfree((x), __LINE__, __FILE__)
 
         typedef struct meta{
-                unsigned int freeNsize : 14;
+                unsigned int isfreeNsize : 14;
                 struct meta* next;
         }meta;
 
