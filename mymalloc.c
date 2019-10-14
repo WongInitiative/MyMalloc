@@ -16,19 +16,26 @@ void myfree(void* usrptr, int line, char* file){
 	printf("Working myFree");
 
 	meta * ptr = (void *) mem;
-	meta* temp = (void *) mem;
 
         ///Ptr Traversal
-        while ((void *)(ptr + 1) != usrptr){
-                temp = temp->next;
+        while ((void *)(ptr-> + 1) != usrptr && ptr->next == NULL){
+                ptr = ptr->next;
         }
 
-        while ((void*) ptr->next != (void*) temp){
-		ptr = ptr->next;	
-	}
+        ///Bit artihmetic
+        ptr->isfreeNsize &= ~(1<<13);
 
-	
-	
+        meta * head = ptr;
+        ptr = ptr-> next;
+        while ((ptr->isfreeNsize) >> 13) & 1 == 0){
+                head->isfreeNsize += ptr->isfreeNsize;
+                ptr = ptr->next;
+        }
+        head = ptr;
+
+
+
+
 
 
 	return;
