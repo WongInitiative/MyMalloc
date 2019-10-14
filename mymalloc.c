@@ -13,28 +13,32 @@ void* mymalloc(int requested, int line, char* file){
 
 void myfree(void* usrptr, int line, char* file){
 
+        ///Initialize a ptr
 	printf("Working myFree");
-
 	meta * ptr = (void *) mem;
 
+
         ///Ptr Traversal
-        while ((void *)(ptr-> + 1) != usrptr && ptr->next == NULL){
+        while ((void *)(ptr->next + 1) != usrptr && ptr->next == NULL){
                 ptr = ptr->next;
         }
 
-        ///Bit artihmetic
+	if ((ptr-> next + 1) != usrptr){
+		printf("Error in ptr to free  %p: in file %s, in line %d);
+		return; 	
+	}
+
+        ///Bit arithmetic
         ptr->isfreeNsize &= ~(1<<13);
 
         meta * head = ptr;
         ptr = ptr-> next;
-        while ((ptr->isfreeNsize) >> 13) & 1 == 0){
+        while ((ptr->isfreeNsize) >> 13) & 1 == 0 || ptr != NULL){
                 head->isfreeNsize += ptr->isfreeNsize;
                 ptr = ptr->next;
         }
-        head = ptr;
 
-
-
+        head->next = ptr;
 
 
 
