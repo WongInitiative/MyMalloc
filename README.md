@@ -11,10 +11,11 @@ To Reduce the size of our meta struct, we assigned an unsigned int to be a 14 bi
 MyFree
 
 Overall Design:
-Since we have each metadata struct point to the next metadata, we can iterate through to find the corresponding metadata for the space we want to free. Once we found this metadata, we can then change it to become a free space and have that free space point to the next used space or NULL (if we reach the end of the array). As we find the next used space if we cross other free spaces, we add the  memory size (i.e. the last 13 bits of the variable discussed in the specifications tab of myMalloc) to the meta data we converted to a free space. To be safe, we also remove the metadata of those unnecessary free spaces (free spaces that come after free spaces) and reinitialize those bytes to zero. 
+Since we have each metadata struct point to the next metadata, we can iterate through to find the corresponding metadata for the space we want to free. Once we found this metadata, we can then change it to become a free space and have that free space point to the next used space or NULL (if we reach the end of the array). As we find the next used space if we cross other free spaces, we add the  memory size (i.e. the last 13 bits of the variable discussed in the specifications tab of myMalloc) to the meta data we converted to a free space. A special condition occurs if a used space is preceded by a free space. In this case, we can have the preceding metadata (which is free) point to the next used space, which must follow the meta data corresponding to the space we want to free. Since we are working with pointers, the meta data that now has no pointer to it (i.e. the meta data corresponding to the space we want to free) essentially become garbage value in the user's perspective. As they do not have access to our structure.
 
 
 Specifications:
+We use bitwise operations to convert the leftmost bit to a free. The operation is ultimately an & operation between 01111111111111 w/ our 14 bit variable that stores the type and size. We add the additional memory as we normally would since 13 bits is more than space for our memory.
 
 
 Memgrind:
