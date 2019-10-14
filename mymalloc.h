@@ -15,11 +15,7 @@
         }__attribute__((packed, aligned(1))) meta;
 
         char mem[4096];
-	meta* ptr = (void*) mem;
-	ptr -> isfreeNsize = 4096 - sizeof(meta); //set 13 bits to size of free space
-	(ptr -> isfreeNsize) |= (1 << 13); //set 14th bit to true
-	ptr -> next = NULL; //set next pointer equal to null
-
+	
 	void* mymalloc(int, int, char*);
 	void myfree(void*, int, char*);
 
