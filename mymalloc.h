@@ -14,7 +14,7 @@
                 struct meta* next; //pointer to next block (aka next metadata struct)
         }__attribute__((packed, aligned(1))) meta; //get rid of byte padding to save space :^)
 
-	static char mem[4096];
+	char mem[4096];
 	
 	void* mymalloc(int, int, char*);
 	void myfree(void*, int, char*);
