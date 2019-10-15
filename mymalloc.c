@@ -42,13 +42,15 @@ void myfree(void* usrptr, int line, char* file){
 	printf("Stage 1\n");
 	
 	if  ((ptr + 1) == usrptr) {
-	  ptr->isfreeNsize &= ~(1<<13); //cast leftmost bit to 0
-	  meta * head = ptr; //points to meta of usrptr
-	  while (((ptr->isfreeNsize) >> 13) & 1 == 0 || ptr != NULL){ //
+		ptr->isfreeNsize &= ~(1<<13); //cast leftmost bit to 0
+		meta * head = ptr; //points to meta of usrptr
+
+	  	while (((ptr->isfreeNsize) >> 13) & 1 == 0 || ptr != NULL){ //
                 head->isfreeNsize += ptr->isfreeNsize;
                 ptr = ptr->next;
-        }
-	  head->next = ptr;
+      		}
+
+ 		head->next = ptr;
 	  
 	}
 
@@ -56,7 +58,7 @@ void myfree(void* usrptr, int line, char* file){
 	printf("Stage 2\n");
 
         while ((void *)(ptr->next + 1) != usrptr && ptr->next == NULL){
-	  ptr = ptr->next;
+		ptr = ptr->next;
         }
 
 	///Can't find usrptr
@@ -66,32 +68,35 @@ void myfree(void* usrptr, int line, char* file){
 	}
 
 	printf("stage 4\n");
-
+	
         ///Found usrptr; now check if ptr we're on is used or free;
 	if ((ptr->isfreeNsize >> 13) == 1){ //if used
-	  printf("got into used\n");
-	  ptr = ptr->next; //have ptr go to the usrptr meta
-	  ptr->isfreeNsize &= ~(1<<13); ///Convert to free 
-	  meta * head = ptr; 
-	  ptr = ptr-> next;
-	  
-	  while (((ptr->isfreeNsize) >> 13) & 1 == 0 || ptr != NULL){ ///go to following meta until we hit a new used meta 
-	    head->isfreeNsize += ptr->isfreeNsize;
-                ptr = ptr->next;
-	  }
+		printf("got into used\n");
+		ptr = ptr->next; //have ptr go to the usrptr meta
+		ptr->isfreeNsize &= ~(1<<13); ///Convert to free 
+		meta * head = ptr; 
+		ptr = ptr-> next;
 
-	  head->next = ptr;
+		while (((ptr->isfreeNsize) >> 13) & 1 == 0 || ptr != NULL){ ///go to following meta until we hit a new used meta 
+			head->isfreeNsize += ptr->isfreeNsize;
+			ptr = ptr->next;
+		}
 
-	} 
+		head->next = ptr;
+
+	}
+ 
 	else if ((ptr->isfreeNsize >> 13) == 0){ //if free
-	  meta * head = ptr; ///No conversion necessary 
-	  ptr = ptr-> next;
+		meta * head = ptr; ///No conversion necessary 
+		ptr = ptr-> next;
 
-	  while (((ptr->isfreeNsize) >> 13) & 1 == 0 || ptr != NULL){ ///go to following meta until we hit a new used meta 
-                head->isfreeNsize += ptr->isfreeNsize;
-                ptr = ptr->next;
-	  }
-	  head->next = ptr;
+		while (((ptr->isfreeNsize) >> 13) & 1 == 0 || ptr != NULL){ ///go to following meta until we hit a new used meta 
+			head->isfreeNsize += ptr->isfreeNsize;
+			ptr = ptr->next;
+		}
+
+		head->next = ptr;
+
 	}
 
 
