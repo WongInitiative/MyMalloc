@@ -6,9 +6,6 @@
 #include <stdbool.h>
 #include <time.h>
 
-//#define malloc(x) mymalloc(requested, __LINE__, __FILE__)
-//#define free(x) myfree(usrptr, __LINE__, __FILE__)
-
 void workLoad1();
 void workLoad2();
 void workLoad3();
@@ -19,109 +16,8 @@ void workLoadUnique2();
 
 
 int main(int argc, char* argv[]){
-
-
-	///General Testing:
-
-	//char* ptr = (char *) malloc(1);
-	//printf("%x", ptr);
-
-		
-	//char* fuck3 = (char*)malloc(4087);
-
-	int* ptrInt = (int *) malloc (4*sizeof(int));
-	ptrInt[0] = 1;
-	ptrInt[1] = 2;
-	ptrInt[2] = 3;
-	ptrInt[3] = 4;
-
-	printf("%p", ptrInt);	
-	free(ptrInt); 
-	printf("%p", ptrInt);	
-
-	meta* ballsack = (void*) mem;
-	int is_free = (((ballsack->isfreeNsize) >> 13) & 1);
-	(ballsack->isfreeNsize) &= ~(1<<13);
-	int block_size = (ballsack->isfreeNsize);
-
-	printf("free%d\n block%d\n", is_free, block_size);	
-
-
-//	printf("%p\n", (void*) &ptrInt[3]);
-
-	double* ptrDouble = (double *) malloc(5*sizeof(double));	
-	ptrDouble[0] = 5.0;
-	ptrDouble[1] = 6.0;
-	ptrDouble[2] = 7.0;
-	ptrDouble[3] = 8.0;
 	
-	printf("%f %f %f\n", ptrDouble[1], ptrDouble[2], ptrDouble [3]);
-
-
-	//char* fuck = (char*) malloc(4005);
-	
-	//char* fuck2 = (char*) malloc(4);
-
-
-	
-//	char* fuck = (char*)malloc(4010);
-//	int i;
-//	for(i = 0; i < 4010; i++){
-//		fuck[i] = 'b';	
-//	}
-//	
-//		
-//	for(i = 0; i < 4010; i++){
-//		char test = fuck[i];	
-//		printf("fuckk[%d] is %c\n", i, test);
-//	}
-
-
-
-
-
-//	void* fuck2 = malloc(1);
-
-//	printf("%p\n", (void*) &ptrDouble[0]);
-//	//printf("%d, %d\n", ptrDouble[0], mem[200]);
-//	
-//	meta* ptr = (void*) mem;
-//	printf("%d\n", ((ptr->next)->isfreeNsize));
-//	printf("%d\n", *((int*)(ptr + 1)));
-//	printf("%d\n", *(((int*)(ptr + 1))+1));
-//	printf("%d\n", *(((int*)(ptr + 1))+2));
-//	printf("%d\n", *(((int*)(ptr + 1))+3));
-//	printf("%f\n", *((double*)((ptr->next) + 1)));
-//	printf("%f\n", *(((double*)(ptr->next + 1))+1));
-//	printf("%f\n", *(((double*)(ptr->next + 1))+2));
-//	printf("%f\n", *(((double*)(ptr->next + 1))+3));
-//
-//	int* ptr2 = (int*) ptr;
-//	int i;
-//	for (i = 0; i < 4095; i++)
-//		printf("value of %d index is %d\n", i, ptr2[i]);
-//	//printf("%d", *();
-//	double* temp = (double*)mem;
-//	printf("%f\n", *((double*)(((char*)ptr)+10+16+9)));
-//	printf("%f\n", *((double*)(((char*)ptr)+10+16+10)));
-//	printf("%f\n", *((double*)(((char*)ptr)+10+16+11)));
-//	printf("%f\n", *((double*)(((char*)ptr)+10+16+12)));
-//	printf("%f\n", *((double*)(((char*)ptr)+10+16+13)));
-//	//printf("%d", *(((int*)(ptr->next + 1))+2));
-//	//printf("%d", *(((int*)(ptr->next + 1))+3));
-
-
-
-	///Workloads
-	//workLoad1();
-	//workLoad2();
-
-
-
-	return 0;
 }
-
-
 /// malloc 1 byte and free immediately after
 void workLoad1(){
 
@@ -172,93 +68,73 @@ void workLoad2(){
 	double total_time = (double) (end - start) / CLOCKS_PER_SEC;
 	double avg_time = total_time / 3; //Time it takes to malloc and free an array of 50
 	printf("Time it took to malloc and free an array of 50 ptrs is: %lf", avg_time);
+}
+
+void testfunc(){
+///General Testing:
+
+//	char* smolchungus = (char*) malloc(4091);
+//	char* medchung = (char*) malloc(1);
+//	char* bigchungus = (char*) malloc(1);
+
+	int* ptrInt = (int *) malloc (4*sizeof(int));
+	ptrInt[0] = 1;
+	ptrInt[1] = 2;
+	ptrInt[2] = 3;
+	ptrInt[3] = 4;
+
+	printf("%d\n", *((int*)(mem+1)));
+
+	printf("%d\n", *((int*)(mem+2)));
+
+	printf("%d\n", *((int*)(mem+6)));
+
+	printf("%d\n", *((int*)(mem+10)));
+	
+	printf("%d\n", *((int*)(mem+2)+3));
+
+	//meta* test = (void*)mem;
+	printf("size is %d\n free is %d\n", ((meta*)(mem+18)) -> size, ((meta*)(mem+18)) -> isfree);
+
+	
+	
+	double* ptrDouble = (double *) malloc (4*sizeof(double));
+	ptrDouble[0] = 5;
+	ptrDouble[1] = 6;
+	ptrDouble[2] = 7;
+	ptrDouble[3] = 8;
+/*
+	printf("%f\n", *((double*)(mem+2))); //this one is at the position of the meta data for the second block, incrementing by two will bring it to proper data;
+
+	printf("%f\n", *((double*)(mem+10)));
+
+	printf("%f\n", *((double*)(mem+18)));
+
+	printf("%f\n", *((double*)(mem+26)));
+	
+	printf("%f\n", *((double*)(mem+34)));
+
+*/
+	free(ptrInt);
+
+
+	printf("size of PtrInt after free is %d and the state of PtrInt after free is %d\n", ((meta*)mem) -> size, ((meta*)mem) -> isfree);
+	printf("%f\n", *(double*)(mem + 16 + 2*sizeof(meta)));
+	printf("%f\n", ptrDouble[0]);
+	printf("%f\n", ptrDouble[1]);
+	printf("%f\n", ptrDouble[2]);
+	printf("%f\n", ptrDouble[3]);	
+	
+
+	char* p = (char *)malloc( 200 );
+	free( p + 10 );
+	///Workloads
+	//workLoad1();
+	//workLoad2();
+
+	
 
 	return;
-
-}
-
-///Randomly choose between 1 byte malloc or freeing 1 byte free
-void workLoad3(){
-	clock_t start, end;
-
-	int count = -1;
-
-	char* ptr[50];
-
-	start = clock();
-	while (count < 50){
-		int number = rand();
-		if (number % 2 == 0 && count == -1){
-			continue;
-		}
-		else if (number % 2 == 0 && count >= 0) {
-			free (ptr[count]);
-  			count--;
-		}
-		else if (number % 2 == 1) {
-			ptr[count] = (char *) malloc(1);
-			count++;
-		}
-
-	}
-
-	int i = 0;
-	while(i < 50){
-		free(ptr[i]);
-		i++;
-	}
-
-	end = clock();
-
-	double total_time = (double) (end - start)/CLOCKS_PER_SEC;
-
-	printf("Time it took for this to occur: %lf", total_time);
-
-}
-
-
-
-void workLoad4(){
-        clock_t start, end;
-
-        void* ptr[50];
-        int count = -1;
-        int i = 0;
-
-        start = clock();
-        while (i < 50){
-                int classifier = rand();
-                if (classifier % 2 == 0 && count == -1) {
-                        continue;
-                }
-                else if (classifier % 2 == 0 && count >= 0){
-                        free (ptr[count]);
-                }
-                else if (classifier % 2 == 1){
-                        int byteSize = rand();
-                        if (byteSize >= 1 && byteSize <= 64){
-                                ptr[i] = (void *) malloc(byteSize);
-                                count++;
-                        }
-                }
-
-        }
-
-        end = clock();
-
-        double total_time = (double) (end - start)/CLOCKS_PER_SEC;
-
-        printf("Total Time for this to take is: %lf", total_time);
-
-
-}
-
-void workLoadUnique1(){
-
-
-}
-
-void workLoadUnique2(){
 
 
 }
