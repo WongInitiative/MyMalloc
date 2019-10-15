@@ -43,7 +43,7 @@ int main(int argc, char* argv[]){
 	//workLoad1();
 	//workLoad2();
 
-	
+
 
 	return 0;
 }
@@ -60,13 +60,13 @@ void workLoad1(){
 		char * ptr = (char*) malloc(sizeof(char));
 		free (ptr);
 		a++;
-	}	
+	}
 
-	end = clock(); //end clock	
-	double total_time = (double) (end - start)/CLOCKS_PER_SEC;  //Total time 
+	end = clock(); //end clock
+	double total_time = (double) (end - start)/CLOCKS_PER_SEC;  //Total time
 	double avg_time = total_time/150;
 	printf("time it takes to malloc then free 1 byte is: %lf", avg_time);
-	
+
 	return;
 }
 
@@ -78,10 +78,10 @@ void workLoad2(){
 	clock_t start, end;
 
 	char* ptr[50];
-	
+
 	int a, b = 0;
-	
-	start = clock (); 
+
+	start = clock ();
 	while (a <150) {
 		while (b < 50){
 			a++;
@@ -89,10 +89,10 @@ void workLoad2(){
 		}
 		b = 0;
 		while (b < 50){
-			free(ptr[b]);	
+			free(ptr[b]);
 			b++;
 		}
-	}	
+	}
 
 
 	end = clock();
@@ -106,13 +106,77 @@ void workLoad2(){
 
 ///Randomly choose between 1 byte malloc or freeing 1 byte free
 void workLoad3(){
+	clock_t start, end;
 
-	
+	int count = -1;
+
+	char* ptr[50];
+
+	start = clock();
+	while (count < 50){
+		int number = rand();
+		if (number % 2 == 0 && count == -1){
+			continue;
+		}
+		else if (number % 2 == 0 && count >= 0) {
+			free (ptr[count]);
+  			count--;
+		}
+		else if (number % 2 == 1) {
+			ptr[count] = (char *) malloc(1);
+			count++;
+		}
+
+	}
+
+	int i = 0;
+	while(i < 50){
+		free(ptr[i]);
+		i++;
+	}
+
+	end = clock();
+
+	double total_time = (double) (end - start)/CLOCKS_PER_SEC;
+
+	printf("Time it took for this to occur: %lf", total_time);
+
 }
 
 
 
 void workLoad4(){
+        clock_t start, end;
+
+        void* ptr[50];
+        int count = -1;
+        int i = 0;
+
+        start = clock();
+        while (i < 50){
+                int classifier = rand();
+                if (classifier % 2 == 0 && count == -1) {
+                        continue;
+                }
+                else if (classifier % 2 == 0 && count >= 0){
+                        free (ptr[count]);
+                }
+                else if (classifier % 2 == 1){
+                        int byteSize = rand();
+                        if (byteSize >= 1 && byteSize <= 64){
+                                ptr[i] = (void *) malloc(byteSize);
+                                count++;
+                        }
+                }
+
+        }
+
+        end = clock();
+
+        double total_time = (double) (end - start)/CLOCKS_PER_SEC;
+
+        printf("Total Time for this to take is: %lf", total_time);
+
 
 }
 
