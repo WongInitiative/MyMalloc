@@ -19,27 +19,19 @@ int main(int argc, char* argv[]){
 	workLoad1();
 	workLoad2();
 	workLoad3();
-	workLoad4();
-	/*int a = 0;
-	while (a <150){
-		char * ptr = (char*) malloc(sizeof(char));
-		printf("%d\n", ((meta*)mem) -> isfree);
-		free (ptr);
-		printf("%d\n", ((meta*)mem) -> isfree);
-		a++;
-	}
-	*/
-	return 0;	
+	//workLoad4();
+	workLoadUnique1();	
+	return 0;
 }
 /// malloc 1 byte and free immediately after
 void workLoad1(){
 
 	double total_time = 0;
-	
+
 	int a;
 	for (a = 0; a < 100; a++){
 		gettimeofday(&start,NULL);
-		
+
 		int b;
 		for (b = 0; b < 150; b++){
 			char* ptr = (char*) malloc(sizeof(char));
@@ -48,9 +40,9 @@ void workLoad1(){
 		}
 		gettimeofday(&end, NULL);
 
-		total_time += (double) (end.tv_usec - start.tv_usec); 
-		
-	}	
+		total_time += (double) (end.tv_usec - start.tv_usec);
+
+	}
 
 	double avg_time = total_time/150;
 	printf("average time it takes to malloc 150 times is %lf\n", avg_time);
@@ -70,13 +62,13 @@ void workLoad2(){
 
 	for (a = 0; a < 100; a++) {
 		gettimeofday(&start, NULL);
-		
+
 		int count = 0;
 		while (count < 3){
 			for (b = 0; b < 50; b++){
 				ptr[b] = (char*) malloc(1);
 			}
-	
+
 			for (b = 0; b <50; b++){
 				free(ptr[b]);
 			}
@@ -84,7 +76,7 @@ void workLoad2(){
 		}
 
 		gettimeofday(&end, NULL);
-		
+
 		total_time += (double)(end.tv_usec - start.tv_usec);
 	}
 
@@ -109,7 +101,7 @@ void workLoad3(){
 			int number = rand();
 			if (number % 2 == 0 && count == -1){ ///If we are trying to free from an array w/o any ptrs
 				continue;
-			} 
+			}
 			else if (number % 2 == 0 && count >= 0){
 				free(ptr[count]);
 				count--;
@@ -117,7 +109,7 @@ void workLoad3(){
 			else if (number % 2 == 1) {
 				ptr[count] = (char *) malloc(1);
 				count++;
-			} 
+			}
 		}
 
 		int i = 0;
@@ -128,12 +120,12 @@ void workLoad3(){
 
 		gettimeofday(&end, NULL);
 		total_time += (double) (end.tv_usec - start.tv_usec);
-		
+
 	}
 
-	double avg_time = total_time / 100; 
-	printf("average time it took to randomly choose between free and malloc, only freeing everything after 50 ptrs are malloced: %f\n", avg_time); 
-	
+	double avg_time = total_time / 100;
+	printf("average time it took to randomly choose between free and malloc, only freeing everything after 50 ptrs are malloced: %f\n", avg_time);
+
 }
 
 ///Randomly mallor or free byte arrays of any size within 1 ~ 64; once 50 of these r malloced free all and end
@@ -149,7 +141,7 @@ void workLoad4(){
 		gettimeofday(&start, NULL);
 
 		while (count < 50){
-		
+
 			int classifier = rand();
 			if (classifier % 2 == 0 && count == -1){
 				continue;
@@ -169,18 +161,43 @@ void workLoad4(){
 		}
 
 		gettimeofday(&end, NULL);
-		total_time += (double)(end.tv_usec - start.tv_usec);	
+		total_time += (double)(end.tv_usec - start.tv_usec);
 
 	}
 
 	double average_time = total_time / 100;
 	printf("average time to randomly malloc or free byte arrays of any size within 1 to 64 bytes is: %lf", average_time);
-	
+
 
 }
 
+///allocate a 150 bytes then perform workload 1 (allocate a byte then immediately free a 150 times)
+void workLoadUnique1(){
+
+        double total_time = 0;
+
+        char* ptr = (char *) malloc (150);
+
+        int a;
+        for (a = 0; a < 100; a ++){
+                gettimeofday (&start, NULL);
+
+                int b;
+                for (b = 0; b < 150; b++){
+                        char * after = (char *) malloc(1);
+                        free (after);
+                }
+
+                gettimeofday(&end, NULL);
+                total_time += (double)(end.tv_usec - start.tv_usec);
+        }
+
+        free(ptr);
+        double average_time = total_time/100;
+        printf("average time to allocate a byte then free after already allocating 150 bytes is: %lf\n", average_time);
 
 
+}
 
 
 
@@ -207,14 +224,14 @@ void testfunc(){
 	printf("%d\n", *((int*)(mem+6)));
 
 	printf("%d\n", *((int*)(mem+10)));
-	
+
 	printf("%d\n", *((int*)(mem+2)+3));
 
 	//meta* test = (void*)mem;
 	printf("size is %d\n free is %d\n", ((meta*)(mem+18)) -> size, ((meta*)(mem+18)) -> isfree);
 
-	
-	
+
+
 	double* ptrDouble = (double *) malloc (4*sizeof(double));
 	ptrDouble[0] = 5;
 	ptrDouble[1] = 6;
@@ -228,7 +245,7 @@ void testfunc(){
 	printf("%f\n", *((double*)(mem+18)));
 
 	printf("%f\n", *((double*)(mem+26)));
-	
+
 	printf("%f\n", *((double*)(mem+34)));
 
 */
@@ -240,8 +257,8 @@ void testfunc(){
 	printf("%f\n", ptrDouble[0]);
 	printf("%f\n", ptrDouble[1]);
 	printf("%f\n", ptrDouble[2]);
-	printf("%f\n", ptrDouble[3]);	
-	
+	printf("%f\n", ptrDouble[3]);
+
 
 	char* p = (char *)malloc( 200 );
 	free( p + 10 );
@@ -249,7 +266,7 @@ void testfunc(){
 	//workLoad1();
 	//workLoad2();
 
-	
+
 
 	return;
 
