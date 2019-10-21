@@ -17,11 +17,11 @@ struct timeval start, end;
 
 int main(int argc, char* argv[]){
 	workLoad1();
-	//workLoad2();
-	//workLoad3();
-	//workLoad4();
-	//workLoadE();
-	//workLoadF();
+	workLoad2();
+	workLoad3();
+	workLoad4();
+	workLoadE();
+	workLoadF();
 
 	return 0;
 }
@@ -141,9 +141,9 @@ void workLoad4(){
 	for (a = 0; a < 100; a++){
 		gettimeofday(&start, NULL);
 
-		//int mallocCount = 0;
+		int mallocCount = 0;
 		int count = 0;
-		while (count < 50){
+		while (count < 50 && mallocCount < 50){
 
 			int classifier = rand();
 			if (classifier % 2 == 0 && count == 0){
@@ -158,7 +158,7 @@ void workLoad4(){
 				while (!(byteSize >=1) && !(byteSize <= 64)) {
 					byteSize = rand();
 				}
-				//mallocCount++;
+				mallocCount++;
 				count++;
 				ptr[count] = (char *) malloc(byteSize);
 			}

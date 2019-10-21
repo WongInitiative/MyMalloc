@@ -14,9 +14,14 @@ Since every block is contiguous we can iterate through each block and check the 
 
 Memgrind:
 
-Unique Workloads:
-
 Results:
+	Workload 1: 11.6 ms
+	Workload 2: 51.59 ms
+	Workload 3: 251.80 ms
+	Workload 4: 801.37 ms
+	Workload E: 201.50 ms
+	Workload F: 124.37 ms
 
-Notes:
+Discussion:
+	We ran each of the workloads independently of one another as well as simultaenously. We found the data to be consistent regardless of whether we ran independently or simultaneously. Its more important to note that this data reflectsthe times that appeared most often. Our unique workloads (E and F), which are discussed in detail in testplan.txt, indicate that our firstfit algorithm optimizes the usage of the space because alternate areas that are freed (what we do in workLoad F) can then be used for memory that is malloced. 
 
