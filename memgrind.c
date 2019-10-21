@@ -146,16 +146,17 @@ void workLoad4(){
 			if (classifier % 2 == 0 && count == 0){
 				continue;
 			}
-			else if (classifier % 2 == 0 && count >= 0){
+			else if (classifier % 2 == 0 && count > 0){
 				count--;
 				free(ptr[count]);
 			}
 			else if (classifier % 2 == 1){
 				int byteSize = rand();
-				if (byteSize >= 1 && byteSize <= 64){
-					count++;
-					ptr[count] = (char *) malloc(byteSize);
+				while (!(byteSize >=1) && !(byteSize <= 64)) { 
+					byteSize = rand(); 
 				}
+				count++;
+				ptr[count] = (char *) malloc(byteSize);
 			}
 
 		}
@@ -172,17 +173,22 @@ void workLoad4(){
 	}
 
 	double average_time = total_time / 100;
-	printf("average time to randomly malloc or free byte arrays of any size within 1 to 64 bytes is: %lf", average_time);
+	printf("average time to randomly malloc or free byte arrays of any size within 1 to 64 bytes is: %lf\n", average_time);
 
 
 }
 
-///allocate a 150 bytes then perform workload 1 (allocate a byte then immediately free a 150 times)
+///allocate 150 1 byte then perform workload 1 (allocate a byte then immediately free a 150 times)
 void workLoadUnique1(){
 
         double total_time = 0;
 
-        char* ptr = (char *) malloc (150);
+	int initial = 0;
+	char* ptr [150];
+	while (initial < 150){
+		ptr[initial] = (char*) malloc(1);
+		initial++;
+	}
 
         int a;
         for (a = 0; a < 100; a ++){
@@ -198,7 +204,12 @@ void workLoadUnique1(){
                 total_time += (double)(end.tv_usec - start.tv_usec);
         }
 
-        free(ptr);
+	initial = 0;
+	while (initial < 150) {
+		free(ptr[initial]);
+		initial++;
+	}       
+
         double average_time = total_time/100;
         printf("average time to allocate a byte then free after already allocating 150 bytes is: %lf\n", average_time);
 
