@@ -19,7 +19,7 @@ int main(int argc, char* argv[]){
 	workLoad1();
 	workLoad2();
 	workLoad3();
-	//workLoad4();
+	workLoad4();
 	workLoadUnique1();	
 	return 0;
 }
@@ -85,26 +85,26 @@ void workLoad2(){
 }
 
 
-///Randomy choose between 1 byte malloc or freeing 1 byte free
+///Randomly choose between 1 byte malloc or freeing 1 byte free
 void workLoad3(){
 	double total_time = 0;
 	char* ptr[50];
-
-	int count = -1;
 
 	int a;
 
 	for(a = 0; a < 100; a++){
 		gettimeofday(&start, NULL);
 
+		int count = 0;
+
 		while (count < 50){
 			int number = rand();
-			if (number % 2 == 0 && count == -1){ ///If we are trying to free from an array w/o any ptrs
+			if (number % 2 == 0 && count == 0){ ///If we are trying to free from an array w/o any ptrs
 				continue;
 			}
-			else if (number % 2 == 0 && count >= 0){
-				free(ptr[count]);
+			else if (number % 2 == 0 && count > 0){
 				count--;
+				free(ptr[count]);
 			}
 			else if (number % 2 == 1) {
 				ptr[count] = (char *) malloc(1);
@@ -133,31 +133,37 @@ void workLoad4(){
 
 	double total_time = 0;
 
-	void * ptr[50];
-	int count = -1;
+	char * ptr[50];
 
 	int a;
 	for (a = 0; a < 100; a++){
 		gettimeofday(&start, NULL);
 
+		int count = 0;
 		while (count < 50){
 
 			int classifier = rand();
-			if (classifier % 2 == 0 && count == -1){
+			if (classifier % 2 == 0 && count == 0){
 				continue;
 			}
 			else if (classifier % 2 == 0 && count >= 0){
-				free(ptr[count]);
 				count--;
+				free(ptr[count]);
 			}
 			else if (classifier % 2 == 1){
 				int byteSize = rand();
 				if (byteSize >= 1 && byteSize <= 64){
-					ptr[count] = (void *) malloc(byteSize);
 					count++;
+					ptr[count] = (char *) malloc(byteSize);
 				}
 			}
 
+		}
+
+		int i = 0;
+		while (i < 50){
+			free(ptr[i]);
+			i++;
 		}
 
 		gettimeofday(&end, NULL);
