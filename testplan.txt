@@ -1,0 +1,14 @@
+Workload E: malloc() 1 byte 150 times and store the pointers in an array then start the timer and malloc() and immediately free() 1 byte 150 times. After doing this, stop the timer and free the 150 1 byte pointers stored in the array.
+
+	Why did we include this workload?
+		-By comparing the execution time of this workload to that of Workload A we can see how much a partially saturated dynamic memory effects the execution time of
+		our mymalloc() and myfree() algorithms. Our expectation is that the execution time of this workload will be slightly longer than that of A since every malloc call
+		after the timer starts needs to iterate through the 150 bytes already malloced before returning.
+
+Workload F: malloc() 1 byte 150 times and store the pointers in an array. Free() every other pointer so there is a 1 byte gap between each malloc() in memory. Start the timer, then 
+randomly alternate between mallocing 1 byte and immediately freeing and mallocing 2 bytes and immediately freeing. Once you have done this 150 times, stop the timer and free() all pointers. 
+	Why did we include this workload?
+		-By comparing the execution time of this workload to that of Workload E, we can understand the effectiveness of our first-fit algorithm implementation in mymalloc().
+		Our expectation is that the runtime of this workload will be less than that of workload E (since in the case of 1 byte, the firstfit algo will allow us to 
+		malloc in the 1 byte gaps instead of iterating past every node), but still take longer than workload A (since workload A does not need to iterate through any nodes 
+		whatsoever and we still need to do that for mallocs of 2 bytes).
